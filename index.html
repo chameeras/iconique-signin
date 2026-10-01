@@ -3,11 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Iconique Visitor Sign-In — IFS Unleashed 2026 (Windows)</title>
-<!-- Windows laptop kiosk support: run Edge or Chrome in kiosk mode for a
-     full-screen, chrome-free display, e.g.
-       msedge.exe --kiosk "C:\path\to\lead-capture-form-windows.html" --edge-kiosk-type=fullscreen
-     or press F11 in any browser for a plain full-screen window. -->
+<title>Iconique Visitor Sign-In — IFS Unleashed 2026 (iPad)</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Iconique Sign-In">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<!-- iPad kiosk use: host this file as index.html on GitHub Pages (https),
+     open it in Safari, sign in from the gear panel, then lock the iPad to
+     Safari with Guided Access (Settings > Accessibility > Guided Access,
+     then triple-click the top/side button). The same file still works on the
+     Windows laptops at http://localhost. -->
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADkUlEQVR4nO3dwW0bWRBF0ZbhWTsAh2I4LEcxcU1Us/GCAEHIfhyOzGa/+n3OWotfpfubhCRQb1++ft/gdz4dfQB6iYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcRJ+PPsCR/vrn70e+7N9vP/Y+Sae3U30w/oM13HeeVk4Rx1Oa+NXylawcx05N/GrVStaM42VZ3FovkdXiOCSLWyslsk4ch2dxa41EVoijKotb0xMZ/0Ow2jK27rM9YnYc/dvvP+EdU19Wxi194kvMyCfHuDK2mWeeF8fELV+MO/mwOMbt951Z558Ux6zNJoOmGBPHoJ3+pymzzIhjyjYfN2KiAXGM2OMH9M81IA6O0h5H//X6E+XTVcdRvrunaJ6xN47mrT1X7aSn/uvzB3/fUfvN21vpk+Ns34/OeUvjoEFjHJ3XaG+FUzfGQYm6OAov0Mu0zV4XBz264mi7Oq9XtYGuOKgiDqKiOKqeqAfq2UNRHLQRB1FLHD3P0gYl22iJg0LiIBIHkTiIKuIoef9VpWEnFXHQSRxE4iASB5E4iMRBJA4icRCJg0gcROIgEgdRRRwTP/p5bw07qYiDTuIgEgeROIha4mh4/9WjZBstcVBIHERFcZQ8Sw/Xs4eiOGgjDqKuOHqeqEep2kBXHFSpi6Pq6rxY2+x1cdCjMY62C/QahVM3xkGJ0jgKr9GuOuc99T/jafiYg2alT46t9TLtoXbS3ji24q09UfOM1XFs3bv7c+XTtcfBgQbEUX69Pqx/rgFxbBP2+H+NmGhGHNuQbT5oyixj4tjm7PS+QVNMimMbtdnfmnX+YXFs0/Z7a9zJ58WxDdzyNvPMb1++fj/6DB834pcjE7O4GPnkuOrfe/8J75gdx9a9/eazPWL2y8qtqpeY6VlcrBPHxeGJrJHFxWpxXBySyEpZXKwZx8XLElkvi4uV47jaqZJVm7g6RRxXT6lk+SauzhXHOw+2cp4a3jl1HNw3/odg7EccROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxEPwFeDLHwVaQOFAAAAABJRU5ErkJggg==">
 
 <style>
@@ -181,6 +186,13 @@
   .confirm-actions button{flex:1;border-radius:9px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;border:none;}
   .confirm-cancel{background:rgba(255,255,255,0.1);color:var(--white);}
   .confirm-delete{background:var(--bad);color:white;}
+  /* iPad / touch screens: bigger staff controls, no sticky hover lift */
+  @media (pointer:coarse){
+    .staff-toggle{width:48px;height:48px;font-size:20px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom, 0px));}
+    .staff-panel{bottom:calc(74px + env(safe-area-inset-bottom, 0px));}
+    .staff-btn{padding:12px;font-size:13px;}
+    .big-btn:hover{transform:none;}
+  }
 </style>
 </head>
 <body>
@@ -286,7 +298,7 @@
     <div class="check-icon">✓</div>
     <h1>Thanks, <span id="thankYouName">there</span>!</h1>
     <p class="sub">Your details are saved. An Iconique team member will be in touch after the show — feel free to grab a member of staff if you'd like to chat now.</p>
-    <p class="sub hidden" id="inviteNote">📅 A calendar invite for your requested meeting has been saved on this laptop — a member of our team will send it across to you.</p>
+    <p class="sub hidden" id="inviteNote">📅 A calendar invite for your requested meeting has been saved on this iPad — a member of our team will send it across to you.</p>
     <button class="big-btn" id="addAnotherBtn">Sign in the next visitor</button>
   </div>
 </div>
@@ -423,7 +435,7 @@ const EVENT_NAME = "IFS Unleashed 2026";
 // Used as the ICS "organizer" on auto-generated meeting invites — CHANGE ME.
 const COMPANY_CONFIG = {
   name: "Iconique",
-  contactEmail: " sales@iconiquetech.ai"
+  contactEmail: "sales@iconiquetech.ai"
 };
 const MEETING_DURATION_MINUTES = 30;
 
@@ -466,19 +478,19 @@ const AZURE_CONFIG = {
   clientId: "427088ca-700f-4eb8-8e25-1206ed9779a7", // "Application (client) ID" from the Azure AD app registration
   tenantId: "f6c7de4e-00b2-4f21-845a-0fc28441c5fe", // "common" (any Microsoft/work/school account), "organizations", "consumers", or a specific tenant ID/domain — must match the app registration's supported account types
   // Must match a "Single-page application" redirect URI registered on the
-  // app in Azure AD EXACTLY (Azure does not fuzzy-match). This app is
-  // registered with the plain "http://localhost" redirect URI, which is a
-  // special exception Azure AD allows without HTTPS — but it only works if
-  // the kiosk laptop's browser is pointed at exactly that address (e.g. a
-  // local web server serving this file as its root document on port 80, so
-  // the address bar reads "http://localhost" with no extra path/port). If
-  // the address bar shows anything else (a filename, a different port, a
-  // real HTTPS host) sign-in will fail with a redirect_uri_mismatch error —
-  // either serve it at that exact address, or add the real hosting URL as
-  // an additional redirect URI on the Azure app and change this to match.
-  redirectUri: "https://chameeras.github.io/iconique-signin/",
-  graphScopes: ["Calendars.ReadWrite"]
+  // Azure app EXACTLY. It's worked out from wherever this page is running,
+  // so the same file works on the Windows laptops (http://localhost) and on
+  // the iPads (the GitHub Pages address, e.g. https://<user>.github.io/<repo>/).
+  // Every address used must be added under Authentication > Single-page
+  // application on the app registration.
+  redirectUri: computeRedirectUri(),
+  graphScopes: ["Calendars.ReadWrite"] // the delegated permission granted on the app registration
 };
+function computeRedirectUri() {
+  if (location.hostname === 'localhost') return 'http://localhost'; // the Windows IIS setup, registered without a trailing slash
+  // Registered without a trailing slash, e.g. https://chameeras.github.io/iconique-signin
+  return location.origin + location.pathname.replace(/index\.html$/i, '').replace(/\/$/, '');
+}
 const INVITE_MAX_ATTEMPTS = 5; // after this many failed sends for one entry, stop retrying and auto-download the .ics instead
 // While AZURE_CONFIG.enabled is false, OR while no staff member has signed
 // in yet, invite handling falls back to the original fully-offline
@@ -486,7 +498,8 @@ const INVITE_MAX_ATTEMPTS = 5; // after this many failed sends for one entry, st
 // send/AirDrop on manually.
 
 let msalInstance = null;  // MSAL PublicClientApplication, created lazily once AZURE_CONFIG.enabled is true
-let azureAccount = null;  // the signed-in staff member's MSAL account object, or null if not signed in
+let azureAccount = null;
+let signInNeeded = false; // true when the Microsoft session expired mid-day and a staff member must sign in again  // the signed-in staff member's MSAL account object, or null if not signed in
 
 let mailQueue = [];       // entries whose invite email failed and is awaiting retry: { entry, attempts }
 let mailSentCount = 0;    // invite emails successfully sent this session
@@ -615,7 +628,7 @@ function showThankYou(firstName, inviteRequested, inviteMethod) {
   if (inviteRequested) {
     note.textContent = inviteMethod === 'email'
       ? '📅 A calendar invite for your requested meeting is on its way to your inbox.'
-      : '📅 A calendar invite for your requested meeting has been saved on this laptop — a member of our team will send it across to you.';
+      : '📅 A calendar invite for your requested meeting has been saved on this iPad — a member of our team will send it across to you.';
   }
   formScreen.classList.add('hidden');
   thankYouScreen.classList.remove('hidden');
@@ -714,11 +727,13 @@ function getMsal() {
       auth: {
         clientId: AZURE_CONFIG.clientId,
         authority: `https://login.microsoftonline.com/${AZURE_CONFIG.tenantId}`,
-        redirectUri: AZURE_CONFIG.redirectUri
+        redirectUri: AZURE_CONFIG.redirectUri,
+        postLogoutRedirectUri: AZURE_CONFIG.redirectUri,
+        navigateToLoginRequestUrl: false
       },
       cache: {
-        // MSAL's popup sign-in flow cannot function on in-memory-only
-        // storage (Microsoft's own docs: popup flow requires session or
+        // MSAL's redirect sign-in flow cannot function on in-memory-only
+        // storage (Microsoft's own docs: redirect flow requires session or
         // local storage) — this is the one deliberate exception to this
         // kiosk suite's usual fully-in-memory approach. It only holds
         // Microsoft's own sign-in/token cache; every visitor entry this
@@ -731,24 +746,88 @@ function getMsal() {
   return msalInstance;
 }
 
-async function signInAzure() {
+// ---------- iPad: redirect sign-in instead of popups ----------
+// Safari on iPad handles MSAL popup windows badly (especially from a Home
+// Screen icon or under Guided Access), so sign-in and sign-out use a full
+// page redirect to Microsoft and back. Because visitor entries live only in
+// memory, they're parked in sessionStorage for the few seconds the page is
+// away at Microsoft, restored the moment it comes back, and the parked copy
+// is deleted straight away.
+const STASH_KEY = 'iconique-kiosk-stash';
+
+function stashState() {
   try {
-    const result = await getMsal().loginPopup({ scopes: AZURE_CONFIG.graphScopes });
-    azureAccount = result.account;
-    refreshStaffPanel();
-    return true;
-  } catch (err) {
-    console.warn('Microsoft sign-in failed or was cancelled:', err);
-    return false;
+    sessionStorage.setItem(STASH_KEY, JSON.stringify({
+      entries, entriesSinceExport, mailSentCount, mailFailedCount, mailGaveUpCount,
+      mailQueue: mailQueue.map(q => ({ idx: entries.indexOf(q.entry), attempts: q.attempts }))
+    }));
+  } catch (e) {
+    console.warn('Could not park entries before the sign-in redirect:', e);
   }
 }
 
-function signOutAzure() {
-  const instance = getMsal();
+function restoreState() {
+  let raw = null;
+  try {
+    raw = sessionStorage.getItem(STASH_KEY);
+    sessionStorage.removeItem(STASH_KEY);
+  } catch (e) {}
+  if (!raw) return;
+  try {
+    const s = JSON.parse(raw);
+    entries = s.entries || [];
+    entriesSinceExport = s.entriesSinceExport || 0;
+    mailSentCount = s.mailSentCount || 0;
+    mailFailedCount = s.mailFailedCount || 0;
+    mailGaveUpCount = s.mailGaveUpCount || 0;
+    mailQueue = (s.mailQueue || [])
+      .filter(q => entries[q.idx])
+      .map(q => ({ entry: entries[q.idx], attempts: q.attempts }));
+  } catch (e) {
+    console.warn('Could not restore parked entries:', e);
+  }
+}
+
+// Finishes a sign-in/sign-out that just came back from Microsoft, or picks
+// up an existing sign-in if the page was reloaded in the same tab.
+let msalReady = Promise.resolve();
+function initMsal() {
+  if (!AZURE_CONFIG.enabled) return;
+  msalReady = getMsal().handleRedirectPromise()
+    .then(result => {
+      azureAccount = (result && result.account) || getMsal().getAllAccounts()[0] || null;
+    })
+    .catch(err => console.warn('Microsoft sign-in did not complete:', err))
+    .finally(() => refreshStaffPanel());
+}
+
+async function signInAzure() {
+  await msalReady;
+  stashState();
+  try {
+    await getMsal().loginRedirect({ scopes: AZURE_CONFIG.graphScopes, prompt: 'select_account' });
+  } catch (err) {
+    try { sessionStorage.removeItem(STASH_KEY); } catch (e) {}
+    console.warn('Microsoft sign-in could not start:', err);
+  }
+}
+
+async function signOutAzure() {
   const account = azureAccount;
   azureAccount = null;
+  signInNeeded = false;
   refreshStaffPanel();
-  if (account) instance.logoutPopup({ account }).catch(err => console.warn('Sign-out popup failed:', err));
+  if (!account) return;
+  await msalReady;
+  stashState();
+  try {
+    // Full Microsoft sign-out, so the next person on this shared iPad
+    // can't reuse the session.
+    await getMsal().logoutRedirect({ account });
+  } catch (err) {
+    try { sessionStorage.removeItem(STASH_KEY); } catch (e) {}
+    console.warn('Sign-out redirect failed:', err);
+  }
 }
 
 async function getGraphToken() {
@@ -758,11 +837,15 @@ async function getGraphToken() {
     const result = await instance.acquireTokenSilent(request);
     return result.accessToken;
   } catch (err) {
-    // Silent renewal failed (expired session, revoked consent, etc.) — fall
-    // back to an interactive popup so a staff member can re-approve it.
-    const result = await instance.acquireTokenPopup(request);
-    azureAccount = result.account;
-    return result.accessToken;
+    // A sign-in window can't be opened automatically on the iPad (Safari
+    // blocks it, and a redirect mid-visitor would be disruptive), so the
+    // staff panel flags it instead. Invites wait in the retry queue and go
+    // out once someone signs in again from the gear panel.
+    if (err instanceof msal.InteractionRequiredAuthError) {
+      signInNeeded = true;
+      refreshStaffPanel();
+    }
+    throw err;
   }
 }
 
@@ -773,32 +856,32 @@ function utf8ToBase64(str) {
   return btoa(unescape(encodeURIComponent(str)));
 }
 
-function buildGraphMessage(entry) {
-  const ics = buildIcs(entry);
+function buildGraphEvent(entry) {
+  // Creates a real meeting in the signed-in staff member's calendar with the
+  // visitor as an attendee. Exchange then emails the visitor a proper meeting
+  // request (Accept / Decline) from that staff mailbox. Needs only the
+  // delegated Calendars.ReadWrite permission.
   const [datePart, timePart] = entry.meetingDateTime.split('T');
-  const whenNice = new Date(`${datePart}T${timePart}:00`).toLocaleString('en-GB', {
-    weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit'
-  });
+  const start = new Date(`${datePart}T${timePart}:00`);
+  const end = new Date(start.getTime() + MEETING_DURATION_MINUTES * 60000);
+  const toGraph = d => d.toISOString().replace('Z', ''); // sent as UTC
   const subject = `Meeting with ${COMPANY_CONFIG.name} — ${EVENT_NAME}`;
   const htmlBody = `<p>Hi ${escapeHtml(entry.firstName)},</p>` +
     `<p>Thanks for stopping by the ${escapeHtml(COMPANY_CONFIG.name)} stand at ${escapeHtml(EVENT_NAME)}. ` +
-    `Your requested meeting is confirmed for <b>${escapeHtml(whenNice)}</b> — the calendar invite is attached.</p>` +
+    `Here is the meeting you requested — please accept it to add it to your calendar.</p>` +
     `<p>See you soon,<br>${escapeHtml(COMPANY_CONFIG.name)}</p>`;
-  const icsFilename = `iconique-meeting-invite-${entry.firstName}-${entry.surname}.ics`.replace(/\s+/g, '-');
 
   return {
-    message: {
-      subject,
-      body: { contentType: 'HTML', content: htmlBody },
-      toRecipients: [{ emailAddress: { address: entry.email, name: `${entry.firstName} ${entry.surname}` } }],
-      attachments: [{
-        '@odata.type': '#microsoft.graph.fileAttachment',
-        name: icsFilename,
-        contentType: 'text/calendar',
-        contentBytes: utf8ToBase64(ics)
-      }]
-    },
-    saveToSentItems: true
+    subject,
+    body: { contentType: 'HTML', content: htmlBody },
+    start: { dateTime: toGraph(start), timeZone: 'UTC' },
+    end: { dateTime: toGraph(end), timeZone: 'UTC' },
+    location: { displayName: `${COMPANY_CONFIG.name} Stand, ${EVENT_NAME}` },
+    attendees: [{
+      emailAddress: { address: entry.email, name: `${entry.firstName} ${entry.surname}` },
+      type: 'required'
+    }],
+    responseRequested: true
   };
 }
 
@@ -811,15 +894,24 @@ function buildGraphMessage(entry) {
 // retrying forever.
 async function sendInviteEmail(entry) {
   if (!azureAccount) return false; // no staff member signed in — caller already fell back to download in this case
+  if (signInNeeded) {
+    // Session expired: hold the invite until a staff member signs in again.
+    if (!mailQueue.some(q => q.entry === entry)) {
+      mailQueue.push({ entry, attempts: 0 });
+      mailFailedCount++;
+    }
+    refreshStaffPanel();
+    return false;
+  }
   try {
     const accessToken = await getGraphToken();
-    const res = await fetch('https://graph.microsoft.com/v1.0/me/sendMail', {
+    const res = await fetch('https://graph.microsoft.com/v1.0/me/events', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
-      body: JSON.stringify(buildGraphMessage(entry))
+      body: JSON.stringify(buildGraphEvent(entry))
     });
     if (!res.ok) throw new Error(`Graph responded ${res.status}`);
     mailSentCount++;
@@ -847,7 +939,7 @@ async function sendInviteEmail(entry) {
 }
 
 async function retryMailQueue() {
-  if (!AZURE_CONFIG.enabled || !azureAccount || mailQueue.length === 0) return;
+  if (!AZURE_CONFIG.enabled || !azureAccount || signInNeeded || mailQueue.length === 0) return;
   // Snapshot the queue so entries that fail again during this pass aren't
   // retried twice in the same sweep.
   const pending = mailQueue.map(q => q.entry);
@@ -873,12 +965,14 @@ function refreshStaffPanel() {
 
   const azureLive = AZURE_CONFIG.enabled && !!azureAccount;
   document.getElementById('inviteModeValue').textContent = !AZURE_CONFIG.enabled
-    ? 'Offline — .ics downloads to this laptop'
-    : (azureAccount ? 'Live — emailed via Microsoft' : 'Not signed in — .ics downloads to this laptop');
+    ? 'Offline — .ics downloads to this iPad'
+    : (azureAccount
+        ? (signInNeeded ? 'Sign-in expired — tap Sign In (entries and invites are kept)' : 'Live — emailed via Microsoft')
+        : 'Not signed in — .ics downloads to this iPad');
   const accountLine = document.getElementById('inviteAccountLine');
   accountLine.classList.toggle('hidden', !azureAccount);
   if (azureAccount) accountLine.textContent = `Signed in as ${azureAccount.username}`;
-  document.getElementById('azureSignInBtn').classList.toggle('hidden', !AZURE_CONFIG.enabled || !!azureAccount);
+  document.getElementById('azureSignInBtn').classList.toggle('hidden', !AZURE_CONFIG.enabled || (!!azureAccount && !signInNeeded));
   document.getElementById('azureSignOutBtn').classList.toggle('hidden', !AZURE_CONFIG.enabled || !azureAccount);
   document.getElementById('inviteSentRow').classList.toggle('hidden', !azureLive);
   document.getElementById('invitePendingRow').classList.toggle('hidden', !azureLive);
@@ -965,6 +1059,8 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
   confirmOverlay.classList.remove('show');
 });
 
+restoreState();
+initMsal();
 refreshStaffPanel();
 </script>
 </body>
